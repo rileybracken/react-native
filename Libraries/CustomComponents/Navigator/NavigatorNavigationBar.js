@@ -64,6 +64,7 @@ var NavigatorNavigationBar = React.createClass({
     }),
     navigationStyles: React.PropTypes.object,
     style: View.propTypes.style,
+    renderBar: React.PropTypes.func.isRequired,
   },
 
   statics: {
@@ -75,6 +76,7 @@ var NavigatorNavigationBar = React.createClass({
   getDefaultProps() {
     return {
       navigationStyles: NavigatorNavigationBarStyles,
+      renderBar: (props) => <View {...props}></View>
     };
   },
 
@@ -150,21 +152,21 @@ var NavigatorNavigationBar = React.createClass({
   },
 
   render: function() {
-    var navBarStyle = {
-      height: this.props.navigationStyles.General.TotalNavHeight,
-    };
-    var navState = this.props.navState;
+    var { renderBar, navState, ...props } = this.props;
+
     var components = COMPONENT_NAMES.map(function (componentName) {
       return navState.routeStack.map(
         this._getComponent.bind(this, componentName)
       );
     }, this);
 
-    return (
-      <View style={[styles.navBarContainer, navBarStyle, this.props.style]}>
-        {components}
-      </View>
-    );
+    var navBarStyle = {
+      height: this.props.navigationStyles.General.TotalNavHeight,
+    };
+
+    return React.cloneElement(renderBar(props), {
+      style: [ styles.navBarContainer, navBarStyle, this.props.style ]
+    }, components);
   },
 
   _getComponent: function(
