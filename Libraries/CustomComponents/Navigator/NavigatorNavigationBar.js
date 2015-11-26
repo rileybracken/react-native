@@ -152,7 +152,7 @@ var NavigatorNavigationBar = React.createClass({
   },
 
   render: function() {
-    var { renderBar, navState, ...props } = this.props;
+    var { renderBar, navState, navigationStyles, ...props } = this.props;
 
     var components = COMPONENT_NAMES.map(function (componentName) {
       return navState.routeStack.map(
@@ -161,11 +161,11 @@ var NavigatorNavigationBar = React.createClass({
     }, this);
 
     var navBarStyle = {
-      height: this.props.navigationStyles.General.TotalNavHeight,
+      height: navigationStyles.General.TotalNavHeight,
     };
 
     return React.cloneElement(renderBar(props), {
-      style: [ styles.navBarContainer, navBarStyle, this.props.style ]
+      style: [ styles.navBarContainer, navBarStyle, props.style ]
     }, components);
   },
 
