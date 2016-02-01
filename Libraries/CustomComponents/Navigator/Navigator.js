@@ -243,7 +243,21 @@ var Navigator = React.createClass({
 
     /**
      * Optionally provide a navigation bar that persists across scene
-     * transitions
+     * transitions.
+     *
+     * This can take a property of `renderBar` that you
+     * can pass a custom view if you needed to add a gradient or blur.
+     *
+     * ```
+     * navigationBar={
+     *   <Navigator.NavigationBar
+     *     renderBar={() => {
+     *      <LinearGradient colors={['#fff', '#000']}></LinearGradient>
+     *     }}
+     *   />
+     * }
+     * ```
+     * note: `LinearGradient` comes from [this](https://github.com/brentvatne/react-native-linear-gradient) open source project.
      */
     navigationBar: PropTypes.node,
 
